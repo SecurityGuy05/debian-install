@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -u pipefail
 
 # Ensure we’re in the *installed* system context (late_command uses in-target).
 export DEBIAN_FRONTEND=noninteractive
