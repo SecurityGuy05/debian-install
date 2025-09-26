@@ -4,6 +4,20 @@ set -euo pipefail
 # Ensure we’re in the *installed* system context (late_command uses in-target).
 export DEBIAN_FRONTEND=noninteractive
 
+echo ">>> Updating /etc/apt/sources.list"
+
+# Clear existing sources.list and replace with yours
+cat >/etc/apt/sources.list <<'EOF'
+# Main repository
+deb http://deb.debian.org/debian trixie main contrib non-free non-free-firmware
+deb-src http://deb.debian.org/debian trixie main contrib non-free non-free-firmware
+
+# Security updates
+deb http://security.debian.org/debian-security trixie-security main contrib non-free non-free-firmware
+deb-src http://security.debian.org/debian-security trixie-security main contrib non-free non-free-firmware
+EOF
+
+
 # Safety: refresh apt and ensure expected pkgs are present
 apt-get update -y
 apt-get install -y systemd sysvinit-utils nano curl wget ca-certificates ufw systemd-zram-generator unattended-upgrades
